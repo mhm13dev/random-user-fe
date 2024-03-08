@@ -44,13 +44,13 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-x-4 my-8 max-w-screen-md">
+    <div className="md:flex items-center justify-between gap-x-4 my-8 max-w-screen-md space-y-4 md:space-y-0">
       <form className="flex items-center gap-x-2" onSubmit={handleSearch}>
         <input
           type="text"
           name="search-query"
           placeholder="Search users"
-          className="max-w-full w-96 p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+          className="max-w-full w-full md:w-96 p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
           defaultValue={searchParams.get("search") || ""}
         />
         <button
@@ -61,7 +61,7 @@ const SearchBar: React.FC = () => {
         </button>
       </form>
 
-      <div className="flex gap-x-2 items-center">
+      <div className="flex gap-x-2 items-center justify-end">
         <label htmlFor="gender-filter" className="text-black font-semibold">
           Gender
         </label>
