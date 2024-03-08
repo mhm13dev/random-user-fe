@@ -2,14 +2,17 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 
 export const mergeQueryString = ({
   searchParams,
-  name,
-  value,
+  newSearchParams,
 }: {
   searchParams: ReadonlyURLSearchParams;
-  name: string;
-  value: string;
+  newSearchParams: {
+    name: string;
+    value: string;
+  }[];
 }) => {
   const params = new URLSearchParams(searchParams.toString());
-  params.set(name, value);
+  newSearchParams.forEach((param) => {
+    params.set(param.name, param.value);
+  });
   return params.toString();
 };

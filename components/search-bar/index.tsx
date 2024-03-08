@@ -13,8 +13,13 @@ const SearchBar: React.FC = () => {
     const searchQuery = e.currentTarget["search-query"].value;
     const mergedParams = mergeQueryString({
       searchParams,
-      name: "search",
-      value: searchQuery,
+      newSearchParams: [
+        { name: "search", value: searchQuery },
+        {
+          name: "page",
+          value: "1",
+        },
+      ],
     });
     router.push(`${pathname}?` + mergedParams);
   };

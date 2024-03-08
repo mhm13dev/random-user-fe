@@ -16,7 +16,18 @@ const Pagination: React.FC = () => {
 
   const createHrefWithQueryParam = useCallback(
     (name: string, value: string) => {
-      return `${pathname}?` + mergeQueryString({ searchParams, name, value });
+      return (
+        `${pathname}?` +
+        mergeQueryString({
+          searchParams,
+          newSearchParams: [
+            {
+              name,
+              value,
+            },
+          ],
+        })
+      );
     },
     [pathname, searchParams]
   );
