@@ -2,11 +2,13 @@ import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MdPersonSearch } from "react-icons/md";
 import { mergeQueryString } from "@/utils/merge-query-string";
+import { SearchResultFilter } from "@/types/common";
 
 const SearchBar: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const filter = searchParams.get("filter") || SearchResultFilter.all;
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,6 +17,23 @@ const SearchBar: React.FC = () => {
       searchParams,
       newSearchParams: [
         { name: "search", value: searchQuery },
+        {
+          name: "page",
+          value: "1",
+        },
+      ],
+    });
+    router.push(`${pathname}?` + mergedParams);
+  };
+
+  const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const mergedParams = mergeQueryString({
+      searchParams,
+      newSearchParams: [
+        {
+          name: "filter",
+          value: e.currentTarget.value,
+        },
         {
           name: "page",
           value: "1",
@@ -49,10 +68,21 @@ const SearchBar: React.FC = () => {
         <select
           id="gender-filter"
           className="p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black w-36 cursor-pointer"
+          defaultValue={
+            SearchResultFilter[filter as keyof typeof SearchResultFilter] ||
+            SearchResultFilter.all
+          }
+          onChange={handleFilter}
         >
-          <option value="all">All</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value={SearchResultFilter.all}>
+            {SearchResultFilter.all.toUpperCase()}
+          </option>
+          <option value={SearchResultFilter.male}>
+            {SearchResultFilter.male.toUpperCase()}
+          </option>
+          <option value={SearchResultFilter.female}>
+            {SearchResultFilter.female.toUpperCase()}
+          </option>
         </select>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { getUsers } from "@/lib/get-users";
-import { LoadingState } from "@/types/common";
+import { LoadingState, SearchResultFilter } from "@/types/common";
 
 interface UserStore {
   users: any[];
@@ -17,7 +17,11 @@ interface UserStore {
 
   actions: {
     getUsers: () => Promise<void>;
-    getPaginatedUsers: (params: { page: number; searchQuery?: string }) => void;
+    getPaginatedUsers: (params: {
+      page: number;
+      searchQuery?: string;
+      filter: SearchResultFilter | null;
+    }) => void;
     setPage: (page: number) => void;
   };
 }
@@ -63,7 +67,7 @@ export const useUserStore = create<UserStore>()(
           }
         },
 
-        getPaginatedUsers: ({ page, searchQuery = "" }) => {
+        getPaginatedUsers: ({ page, searchQuery = "", filter }) => {
           set({ loading: "loading" });
           const users = get().users;
           let filteredUsers = [...users];
@@ -73,6 +77,12 @@ export const useUserStore = create<UserStore>()(
               return (user.name.first + " " + user.name.last)
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase());
+            });
+          }
+
+          if (filter && filter !== SearchResultFilter.all) {
+            filteredUsers = filteredUsers.filter((user) => {
+              return user.gender.toLowerCase() === filter.toLowerCase();
             });
           }
 
