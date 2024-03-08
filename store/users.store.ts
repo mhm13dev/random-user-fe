@@ -5,6 +5,7 @@ import { LoadingState } from "@/types/common";
 
 interface UserStore {
   users: any[];
+  paginatedUsers: any[];
   loading: LoadingState;
   error: string | null;
 
@@ -16,11 +17,7 @@ interface UserStore {
 
   actions: {
     getUsers: () => Promise<void>;
-    getPaginatedUsers: (params: {
-      users: any[];
-      page: number;
-      limit?: number;
-    }) => any[];
+    getPaginatedUsers: (params: { page: number; searchQuery?: string }) => void;
     setPage: (page: number) => void;
   };
 }
@@ -29,6 +26,7 @@ export const useUserStore = create<UserStore>()(
   devtools(
     (set, get) => ({
       users: [],
+      paginatedUsers: [],
       loading: "idle",
       error: null,
 
@@ -36,7 +34,7 @@ export const useUserStore = create<UserStore>()(
       limit: 30,
 
       maximumUsers: 1000,
-      totalPages: 1,
+      totalPages: 0,
 
       actions: {
         getUsers: async () => {
@@ -44,34 +42,58 @@ export const useUserStore = create<UserStore>()(
           if (get().users.length > 0) return;
 
           try {
-            set({ loading: "loading", error: null });
+            set({
+              loading: "loading",
+              error: null,
+            });
             const users = await getUsers({
               maximumUsers: get().maximumUsers,
             });
             set({
               users,
-              loading: "success",
               error: null,
-              totalPages: Math.ceil(users.length / get().limit),
             });
           } catch (err: any) {
             set({
               users: [],
               loading: "error",
               error: err.message,
-              totalPages: 1,
+              totalPages: 0,
             });
           }
         },
 
-        getPaginatedUsers: ({ users, page }) => {
+        getPaginatedUsers: ({ page, searchQuery = "" }) => {
+          set({ loading: "loading" });
+          const users = get().users;
+          let filteredUsers = [...users];
+
+          if (searchQuery.trim().length > 0) {
+            filteredUsers = users.filter((user) => {
+              return (user.name.first + " " + user.name.last)
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
+            });
+          }
+
+          let paginatedUsers = [];
+
           const start = (page - 1) * get().limit;
           const end = start + get().limit;
 
-          if (users.length === 0 || users.length < start) return [];
-          if (users.length < end) return users.slice(start, users.length);
+          if (filteredUsers.length === 0 || filteredUsers.length < start) {
+            paginatedUsers = [];
+          } else if (filteredUsers.length < end) {
+            paginatedUsers = filteredUsers.slice(start, filteredUsers.length);
+          } else {
+            paginatedUsers = filteredUsers.slice(start, end);
+          }
 
-          return get().users.slice(start, end);
+          set({
+            loading: "success",
+            paginatedUsers,
+            totalPages: Math.ceil(filteredUsers.length / get().limit),
+          });
         },
 
         setPage: (page: number) => {
