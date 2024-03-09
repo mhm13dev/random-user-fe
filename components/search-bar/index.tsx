@@ -1,14 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useShallow } from "zustand/react/shallow";
 import { MdPersonSearch } from "react-icons/md";
+import { useUserStore } from "@/store/users.store";
 import { mergeQueryString } from "@/utils/merge-query-string";
 import { SearchResultFilter } from "@/types/common";
 
-const SearchBar: React.FC = () => {
+interface Props {
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setFilter: React.Dispatch<React.SetStateAction<SearchResultFilter | null>>;
+}
+
+const SearchBar: React.FC<Props> = ({ setSearchQuery, setFilter }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const filter = searchParams.get("filter") || SearchResultFilter.all;
+  const filterQueryParam = searchParams.get("filter") || SearchResultFilter.all;
+  const { setPage } = useUserStore(useShallow((store) => store.actions));
+
+  useEffect(() => {
+    const page = Number(searchParams.get("page"));
+    // If a page is invalid, redirect to the first page
+    if (isNaN(page) || page < 1) {
+      const updatedSearchParams = mergeQueryString({
+        searchParams,
+        newSearchParams: [{ name: "page", value: "1" }],
+      });
+      router.push("?" + updatedSearchParams);
+      setPage(1);
+    } else {
+      setPage(page);
+    }
+
+    setSearchQuery(searchParams.get("search") || "");
+    const filter = searchParams.get("filter") || SearchResultFilter.all;
+    setFilter(
+      SearchResultFilter[filter as keyof typeof SearchResultFilter] ||
+        SearchResultFilter.all
+    );
+  }, [searchParams, router, setPage, setSearchQuery, setFilter]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,8 +99,9 @@ const SearchBar: React.FC = () => {
           id="gender-filter"
           className="p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 w-36 cursor-pointer"
           defaultValue={
-            SearchResultFilter[filter as keyof typeof SearchResultFilter] ||
-            SearchResultFilter.all
+            SearchResultFilter[
+              filterQueryParam as keyof typeof SearchResultFilter
+            ] || SearchResultFilter.all
           }
           onChange={handleFilter}
         >
