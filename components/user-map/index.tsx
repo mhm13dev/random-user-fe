@@ -26,9 +26,9 @@ const UserMap: React.FC<Props> = ({ lat, lng }) => {
 
   return (
     <div>
-      <p className="text-sm text-center text-gray-500 mb-2">
+      <p className="text-sm text-center text-gray-500 mb-4">
         Note: Some users have invalid coordinates (returned by Random User API),
-        so the map might not be show the correct location.
+        so the map might not show the correct location.
       </p>
       <GoogleMap
         center={{ lat, lng }}
