@@ -26,11 +26,11 @@ export default function Home() {
   );
 
   useEffect(() => {
-    if (!users.length) return;
+    if (!users.length || !filter) return;
     getPaginatedUsers({
       page,
-      searchQuery,
       filter,
+      searchQuery,
     });
   }, [users, page, searchQuery, filter, getPaginatedUsers]);
 
@@ -52,7 +52,9 @@ export default function Home() {
       {loading === "error" && (
         <p className="text-red-500 font-semibold">Error: {error}</p>
       )}
-      {loading === "success" && !paginatedUsers.length && <p>No users found</p>}
+      {loading === "success" && !paginatedUsers.length && (
+        <p className="text-red-500 font-semibold">No users found!</p>
+      )}
     </main>
   );
 }

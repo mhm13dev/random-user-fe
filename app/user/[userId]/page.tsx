@@ -33,8 +33,16 @@ export default function UserPage() {
       {(loading === "loading" || loading === "idle") && (
         <CgSpinner className="animate-spin size-8 mx-auto text-green-500 mt-10" />
       )}
-      {loading === "success" && !user && <div>User not found</div>}
-      {loading === "error" && <div>Error: {error}</div>}
+      {loading === "success" && !user && (
+        <div className="text-red-500 font-semibold text-center mt-10">
+          User not found
+        </div>
+      )}
+      {loading === "error" && (
+        <p className="text-red-500 font-semibold text-center mt-10">
+          Error: {error}
+        </p>
+      )}
     </main>
   );
 }

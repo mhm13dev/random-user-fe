@@ -32,8 +32,14 @@ This is a frontend coding assesment project for a company. The project is a simp
 
 ## Considerations
 
+**Frontend Framework**
+I asked in the email if I can use Next.js for this project but I didn't get a response. I used Next.js because it's the recommended framework for React applications according to the official documentation.
+https://react.dev/learn/start-a-new-react-project#:~:text=we%20recommend%20using%20a%20framework
+
 **API**
 I used the Random User API to fetch random users. This API only gives us a single endpoint to fetch a list of user. It does have pagination support but there was no way to fetch a specific user by ID. I had to fetch the entire list of users (I fetched 1000 users) and store it in Zustand global store and then filter the user by ID to view the user's profile page. I also implemented the pagination on client side i.e. I fetched the entire list of users and then paginated the list on the client side from global store. This is not ideal for a production application but it works for this project.
+
+We can pass a **seed** to the Random User API to get the same list of users every time. I used this feature to get the same list of users every time I refresh the page.
 
 **State Management**
 I used Zustand for state management because it's a simple and lightweight state management library that works well with React. It is also easy to use and has a small API surface.

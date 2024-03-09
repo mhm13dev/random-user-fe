@@ -2,7 +2,7 @@ import { axiosAPI } from "@/utils/axios";
 import { User } from "./types";
 
 interface GetUserParams {
-  maximumUsers: number;
+  maximumUsers?: number;
 }
 
 export const getUsers = async (params?: GetUserParams): Promise<User[]> => {

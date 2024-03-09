@@ -9,7 +9,7 @@ export const mergeQueryString = ({
     name: string;
     value: string;
   }[];
-}) => {
+}): string => {
   const params = new URLSearchParams(searchParams.toString());
   newSearchParams.forEach((param) => {
     params.set(param.name, param.value);

@@ -44,7 +44,7 @@ const UserProfileCard: React.FC<Props> = ({ user }) => {
       },
       country: {
         name: user.location.country,
-        flag: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${user.nat.toUpperCase()}.svg`,
+        flag: `https://purecatamphetamine.github.io/country-flag-icons/3x2/${user.nat.toUpperCase()}.svg`,
       },
     };
   }, [user]);

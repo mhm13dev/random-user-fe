@@ -8,6 +8,7 @@ interface Props {
   children: React.ReactNode;
 }
 
+// This component is used to fetch users data from the API so that it can be used in the entire app using the global Zustand store
 const UsersProvider: React.FC<Props> = ({ children }) => {
   const { getUsers } = useUserStore(useShallow((store) => store.actions));
 
