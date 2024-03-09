@@ -42,6 +42,10 @@ const UserProfileCard: React.FC<Props> = ({ user }) => {
         description: "My password is",
         value: user.login.password,
       },
+      country: {
+        name: user.location.country,
+        flag: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${user.nat.toUpperCase()}.svg`,
+      },
     };
   }, [user]);
   const [userDataField, setUserDataField] = useState<{
@@ -146,6 +150,19 @@ const UserProfileCard: React.FC<Props> = ({ user }) => {
               )}
             />
           </button>
+        </div>
+
+        <div className="mt-4">
+          <p className="text-sm sm:text-base font-semibold flex items-center justify-center">
+            <span className="mr-2">{data.country.name}</span>
+            <Image
+              src={data.country.flag}
+              alt={user.nat}
+              className="size-6 inline-block"
+              width={32}
+              height={32}
+            />
+          </p>
         </div>
       </div>
     </div>
