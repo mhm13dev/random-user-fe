@@ -8,7 +8,7 @@ const Header: React.FC = () => {
       <div className="max-w-screen-xl mx-auto flex">
         <Link
           href="/"
-          className="flex items-center justify-center text-white hover:text-gray-300 transition-all duration-300"
+          className="flex items-center justify-center text-white hover:text-green-500 transition-all duration-300"
         >
           <FaRegUserCircle className="text-3xl mr-2" />
           <h1 className="text-lg font-semibold">Random Users</h1>

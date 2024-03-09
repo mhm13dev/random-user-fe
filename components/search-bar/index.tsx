@@ -50,12 +50,12 @@ const SearchBar: React.FC = () => {
           type="text"
           name="search-query"
           placeholder="Search users"
-          className="max-w-full w-full md:w-96 p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+          className="max-w-full w-full md:w-96 p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
           defaultValue={searchParams.get("search") || ""}
         />
         <button
           type="submit"
-          className="bg-black hover:bg-black p-2 rounded-md"
+          className="bg-black hover:bg-green-500 p-2 rounded-md transition-all duration-300"
         >
           <MdPersonSearch className="size-6 fill-white" />
         </button>
@@ -67,7 +67,7 @@ const SearchBar: React.FC = () => {
         </label>
         <select
           id="gender-filter"
-          className="p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black w-36 cursor-pointer"
+          className="p-2 ring-1 ring-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 w-36 cursor-pointer"
           defaultValue={
             SearchResultFilter[filter as keyof typeof SearchResultFilter] ||
             SearchResultFilter.all

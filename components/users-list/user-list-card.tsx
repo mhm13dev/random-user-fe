@@ -38,7 +38,7 @@ const UserListCard: React.FC<Props> = ({ user }) => {
       <div className="text-right">
         <Link
           href={`/user/${user.login.uuid}`}
-          className="bg-black text-sm text-white px-2 py-1.5 rounded-md hover:bg-gray-800 transition-all duration-300"
+          className="bg-black text-sm text-white px-2 py-1.5 rounded-md hover:bg-green-500 transition-all duration-300"
         >
           View Profile
         </Link>

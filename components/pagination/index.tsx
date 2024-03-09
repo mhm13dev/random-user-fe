@@ -37,11 +37,11 @@ const Pagination: React.FC = () => {
       <Link
         href={createHrefWithQueryParam("page", `${page > 1 ? page - 1 : 1}`)}
         className={clsx(
-          "bg-black text-white px-4 py-2 rounded-md flex items-center",
+          "bg-black text-white px-3 py-2 rounded-md flex items-center hover:bg-green-500 text-sm transition-all duration-300",
           page === 1 ? "pointer-events-none opacity-50 cursor-not-allowed" : ""
         )}
       >
-        <GrFormPreviousLink className="size-6 mr-1" />
+        <GrFormPreviousLink className="size-5 mr-1" />
         Previous
       </Link>
       <span className="mx-4 font-semibold">
@@ -53,14 +53,14 @@ const Pagination: React.FC = () => {
           `${totalPages > page ? page + 1 : page}`
         )}
         className={clsx(
-          "bg-black text-white px-4 py-2 rounded-md flex items-center",
+          "bg-black text-white px-3 py-2 rounded-md flex items-center hover:bg-green-500 text-sm transition-all duration-300",
           totalPages === page
             ? "pointer-events-none opacity-50 cursor-not-allowed"
             : ""
         )}
       >
         Next
-        <GrFormNextLink className="size-6 ml-1" />
+        <GrFormNextLink className="size-5 ml-1" />
       </Link>
     </div>
   );
