@@ -154,7 +154,6 @@ const UserProfileCard: React.FC<Props> = ({ user }) => {
 
         <div className="mt-4">
           <p className="text-sm sm:text-base font-semibold flex items-center justify-center">
-            <span className="mr-2">{data.country.name}</span>
             <Image
               src={data.country.flag}
               alt={user.nat}
@@ -162,6 +161,7 @@ const UserProfileCard: React.FC<Props> = ({ user }) => {
               width={32}
               height={32}
             />
+            <span className="ml-2">{data.country.name}</span>
           </p>
         </div>
       </div>
