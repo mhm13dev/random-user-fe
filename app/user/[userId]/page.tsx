@@ -6,6 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import { CgSpinner } from "react-icons/cg";
 import { useUserStore } from "@/store/users.store";
 import UserProfileCard from "@/components/user-profile-card";
+import UserMap from "@/components/user-map";
 
 export default function UserPage() {
   const params = useParams();
@@ -29,7 +30,18 @@ export default function UserPage() {
 
   return (
     <main className="max-w-screen-md mx-auto p-2 sm:p-4">
-      {loading === "success" && user && <UserProfileCard user={user} />}
+      {loading === "success" && user && (
+        <div className="space-y-8">
+          <UserProfileCard user={user} />
+          {!isNaN(+user.location.coordinates.latitude) &&
+            !isNaN(+user.location.coordinates.longitude) && (
+              <UserMap
+                lat={+user.location.coordinates.latitude}
+                lng={+user.location.coordinates.longitude}
+              />
+            )}
+        </div>
+      )}
       {(loading === "loading" || loading === "idle") && (
         <CgSpinner className="animate-spin size-8 mx-auto text-green-500 mt-10" />
       )}
