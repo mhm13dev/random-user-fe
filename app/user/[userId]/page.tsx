@@ -29,7 +29,7 @@ export default function UserPage() {
   }, [users, params.userId, getUserById]);
 
   return (
-    <main className="max-w-screen-md mx-auto px-2 pb-4 sm:p-4">
+    <main className="max-w-screen-md mx-auto px-2 pt-2 pb-4 sm:p-4">
       {loading === "success" && user && (
         <div className="space-y-8">
           <UserProfileCard user={user} />
