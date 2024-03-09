@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Details
 
-## Getting Started
+This is a frontend coding assesment project for a company. The project is a simple web application that allows users to view a list of random users and view their profiles.
 
-First, run the development server:
+## How to run the project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Clone the repository
+- Run `yarn install` to install the dependencies
+- Run `yarn build` to build the project
+- Run `yarn start` to start the production server
+- Open `http://localhost:3000` in your browser
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- React.js (Next.js)
+- TypeScript
+- Tailwind CSS
+- Zustand
+- React Icons
+- Axios
+- Country Flags - https://gitlab.com/catamphetamine/country-flag-icons
+- Random User API - https://randomuser.me
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- View a list of random users on Home page
+- View user profile by clicking on a user
+- Search for users by name
+- Filter users by gender
+- View user location on map
+- View user's country flag
 
-To learn more about Next.js, take a look at the following resources:
+## Considerations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**API**
+I used the Random User API to fetch random users. This API only gives us a single endpoint to fetch a list of user. It does have pagination support but there was no way to fetch a specific user by ID. I had to fetch the entire list of users (I fetched 1000 users) and store it in Zustand global store and then filter the user by ID to view the user's profile page. I also implemented the pagination on client side i.e. I fetched the entire list of users and then paginated the list on the client side from global store. This is not ideal for a production application but it works for this project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**State Management**
+I used Zustand for state management because it's a simple and lightweight state management library that works well with React. It is also easy to use and has a small API surface.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Country Flags**:
+I used this package for fetching country flags https://gitlab.com/catamphetamine/country-flag-icons. It's a simple package that provides SVG icons for country flags based on country's ISO2 code.
