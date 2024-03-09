@@ -50,3 +50,6 @@ I used this package for fetching country flags https://gitlab.com/catamphetamine
 
 **Google Maps**
 I used the `react-google-maps/api` package to show user location on Google Maps. I noticed that some of the users returned by the Random User API have invalid location coordinates, so the map might show incorrect location for some users.
+
+**Filter, Search and Pagination Persistence**
+I used the query parameters to persist the filter, search and pagination state in the URL. This means that if you refresh the page, or navigate to another page and come back, the filter, search and pagination state will be persisted.
