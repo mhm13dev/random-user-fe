@@ -24,13 +24,9 @@ export default function Home() {
       paginatedUsers: state.paginatedUsers,
     }))
   );
-  const { getUsers, getPaginatedUsers, setPage } = useUserStore(
+  const { getPaginatedUsers, setPage } = useUserStore(
     useShallow((store) => store.actions)
   );
-
-  useEffect(() => {
-    getUsers();
-  }, [getUsers]);
 
   useEffect(() => {
     const page = Number(searchParams.get("page"));
