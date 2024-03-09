@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { getUsers } from "@/lib/get-users";
+import { User, getUsers } from "@/lib/get-users";
 import { LoadingState, SearchResultFilter } from "@/types/common";
 
 interface UserStore {
-  users: any[];
-  paginatedUsers: any[];
+  users: User[];
+  paginatedUsers: User[];
   loading: LoadingState;
   error: string | null;
 
@@ -19,9 +19,10 @@ interface UserStore {
     getUsers: () => Promise<void>;
     getPaginatedUsers: (params: {
       page: number;
-      searchQuery?: string;
       filter: SearchResultFilter | null;
+      searchQuery?: string;
     }) => void;
+    getUserById: (userId: string) => User | null;
     setPage: (page: number) => void;
   };
 }
@@ -54,9 +55,11 @@ export const useUserStore = create<UserStore>()(
               maximumUsers: get().maximumUsers,
             });
             set({
+              loading: "success",
               users,
               error: null,
             });
+            // Catch clause variable type annotation must be 'any' or 'unknown' if specified
           } catch (err: any) {
             set({
               users: [],
@@ -67,18 +70,9 @@ export const useUserStore = create<UserStore>()(
           }
         },
 
-        getPaginatedUsers: ({ page, searchQuery = "", filter }) => {
-          set({ loading: "loading" });
+        getPaginatedUsers: ({ page, filter, searchQuery = "" }) => {
           const users = get().users;
           let filteredUsers = [...users];
-
-          if (searchQuery.trim().length > 0) {
-            filteredUsers = users.filter((user) => {
-              return (user.name.first + " " + user.name.last)
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase());
-            });
-          }
 
           if (filter && filter !== SearchResultFilter.all) {
             filteredUsers = filteredUsers.filter((user) => {
@@ -86,7 +80,15 @@ export const useUserStore = create<UserStore>()(
             });
           }
 
-          let paginatedUsers = [];
+          if (searchQuery.trim().length > 0) {
+            filteredUsers = filteredUsers.filter((user) => {
+              return (user.name.first + " " + user.name.last)
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
+            });
+          }
+
+          let paginatedUsers: User[] = [];
 
           const start = (page - 1) * get().limit;
           const end = start + get().limit;
@@ -100,10 +102,15 @@ export const useUserStore = create<UserStore>()(
           }
 
           set({
-            loading: "success",
             paginatedUsers,
             totalPages: Math.ceil(filteredUsers.length / get().limit),
           });
+        },
+
+        getUserById: (userId: string) => {
+          const users = get().users;
+          const user = users.find((user) => user.login.uuid === userId);
+          return user ?? null;
         },
 
         setPage: (page: number) => {
