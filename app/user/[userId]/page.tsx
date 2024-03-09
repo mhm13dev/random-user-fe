@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useShallow } from "zustand/react/shallow";
+import { CgSpinner } from "react-icons/cg";
 import { useUserStore } from "@/store/users.store";
 import UserProfileCard from "@/components/user-profile-card";
 
@@ -28,10 +29,12 @@ export default function UserPage() {
 
   return (
     <main className="max-w-screen-md mx-auto p-2 sm:p-4">
-      {loading === "success" && user ? <UserProfileCard user={user} /> : null}
-      {loading === "loading" ? <div>Loading...</div> : null}
-      {loading === "success" && !user ? <div>User not found</div> : null}
-      {error ? <div>Error: {error}</div> : null}
+      {loading === "success" && user && <UserProfileCard user={user} />}
+      {(loading === "loading" || loading === "idle") && (
+        <CgSpinner className="animate-spin size-8 mx-auto text-green-500 mt-10" />
+      )}
+      {loading === "success" && !user && <div>User not found</div>}
+      {loading === "error" && <div>Error: {error}</div>}
     </main>
   );
 }

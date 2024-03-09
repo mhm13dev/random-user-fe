@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { CgSpinner } from "react-icons/cg";
 import { useUserStore } from "@/store/users.store";
 import SearchBar from "@/components/search-bar";
 import UsersList from "@/components/users-list";
@@ -40,11 +41,17 @@ export default function Home() {
       </Suspense>
 
       {loading === "success" && !!paginatedUsers.length && (
-        <UsersList users={paginatedUsers} />
+        <>
+          <UsersList users={paginatedUsers} />
+          <Pagination />
+        </>
       )}
-      {loading === "success" && !!paginatedUsers.length && <Pagination />}
-      {loading === "loading" && <p>Loading...</p>}
-      {loading === "error" && <p>Error: {error}</p>}
+      {(loading === "loading" || loading === "idle") && (
+        <CgSpinner className="animate-spin size-8 mx-auto text-green-500" />
+      )}
+      {loading === "error" && (
+        <p className="text-red-500 font-semibold">Error: {error}</p>
+      )}
       {loading === "success" && !paginatedUsers.length && <p>No users found</p>}
     </main>
   );
