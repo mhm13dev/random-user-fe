@@ -27,7 +27,7 @@ export default function UserPage() {
   }, [users, params.userId, getUserById]);
 
   return (
-    <main className="max-w-screen-md mx-auto p-4">
+    <main className="max-w-screen-md mx-auto p-2 sm:p-4">
       {loading === "success" && user ? <UserProfileCard user={user} /> : null}
       {loading === "loading" ? <div>Loading...</div> : null}
       {loading === "success" && !user ? <div>User not found</div> : null}

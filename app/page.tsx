@@ -60,7 +60,7 @@ export default function Home() {
   }, [users, page, searchQuery, filter, getPaginatedUsers]);
 
   return (
-    <main className="px-4 max-w-screen-md mx-auto pb-4">
+    <main className="px-2 sm:px-4 max-w-screen-md mx-auto pb-4">
       <SearchBar />
       {loading === "success" && !!paginatedUsers.length && (
         <UsersList users={paginatedUsers} />
