@@ -18,6 +18,7 @@ This is a frontend coding assesment project for a company. The project is a simp
 - Zustand
 - React Icons
 - Axios
+- Google Maps
 - Country Flags - https://gitlab.com/catamphetamine/country-flag-icons
 - Random User API - https://randomuser.me
 
@@ -46,3 +47,6 @@ I used Zustand for state management because it's a simple and lightweight state 
 
 **Country Flags**:
 I used this package for fetching country flags https://gitlab.com/catamphetamine/country-flag-icons. It's a simple package that provides SVG icons for country flags based on country's ISO2 code.
+
+**Google Maps**
+I used the `react-google-maps/api` package to show user location on Google Maps. I noticed that some of the users returned by the Random User API have invalid location coordinates, so the map might show incorrect location for some users.
