@@ -1,6 +1,6 @@
 # Project Details
 
-This is a frontend coding assesment project for a company. The project is a simple web application that allows users to view a list of random users and view their profiles.
+This is a frontend coding assessment project for a company. The project is a simple web application that allows users to view a list of random users and view their profiles.
 
 ## How to run the project
 
